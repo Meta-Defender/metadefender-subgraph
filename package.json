@@ -1,0 +1,25 @@
+{
+  "name": "exmaple-subgraph",
+  "author": "tdergouzi",
+  "description": "Ethereum example subgraph.",
+  "scripts": {
+    "compile": "truffle compile",
+    "codegen": "graph codegen subgraphs/subgraph_meta_defender.yaml",
+    "create-local": "graph create --node http://localhost:8020/ example/example",
+    "deploy-local": "graph deploy example/example subgraphs/subgraph_meta_defender.yaml --node http://localhost:8020/ --ipfs http://localhost:5001",
+    "remove-local": "graph remove --node http://localhost:8020/ example/example",
+    "build-example": "graph build subgraphs/subgraph_meta_defender.yaml tdergouzi/example",
+    "deploy-example-host": "graph deploy --product hosted-service ${host service subgraph name} subgraphs/subgraph_meta_defender.yaml"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.33.0",
+    "@graphprotocol/graph-ts": "0.27.0",
+    "@nomiclabs/buidler-waffle": "^2.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "ethereum-waffle": "^3.1.0",
+    "truffle": "^5.0.4",
+    "truffle-flattener": "^1.4.4",
+    "truffle-hdwallet-provider": "^1.0.4"
+  }
+}

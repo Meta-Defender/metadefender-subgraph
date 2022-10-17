@@ -1,0 +1,10 @@
+type LiquidityCertificate @entity {
+    # account address
+    id: ID!
+    certificateId: BigInt!
+    timestamp: BigInt!
+    expiryTime: BigInt!
+    liquidity: BigInt!
+    rewardDebt: BigInt!
+    shadowDebt: BigInt!
+}
