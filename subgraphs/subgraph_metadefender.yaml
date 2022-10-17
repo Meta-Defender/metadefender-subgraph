@@ -2,15 +2,17 @@ specVersion: 0.0.4
 description: Example subgraph. 
 repository: https://github.com/meta-verse-subgraph
 schema:
-  file: ../schema/schema_meta_defender.graphql
+  file: ../schema/schema_metadefender.graphql
 dataSources:
   - kind: ethereum/contract
     name: MetaDefender
-    network: goerli
+    network: localhost
     source:
-      address: '0x13B77fe929638A68E701a1D123b40Bce72999ad0'
+      # change here to your contract address.
+      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
       abi: LiquidityCertificate
-      startBlock: 7700000
+      # change here: the block you want to sync.
+      startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

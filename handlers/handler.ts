@@ -1,5 +1,5 @@
-import { NewLPMinted } from '../../generated/MetaDefender/LiquidityCertificate';
-import { LiquidityCertificate } from '../../generated/schema';
+import { NewLPMinted } from '../generated/MetaDefender/LiquidityCertificate';
+import { LiquidityCertificate } from '../generated/schema';
 import { Address, BigInt } from '@graphprotocol/graph-ts'
 
 export function handleNewLPMinted(event: NewLPMinted): void {
