@@ -6,10 +6,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: MetaDefender
-    network: localhost
+    network: mainnet
     source:
       # change here to your contract address.
-      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+      address: '0xa513e6e4b8f2a923d98304ec87f64353c4d5c853'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 0
@@ -25,4 +25,4 @@ dataSources:
       eventHandlers:
         - event: NewLPMinted(uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleNewLPMinted
-      file: ../handlers/example/handler.ts
+      file: ../handlers/handler.ts
