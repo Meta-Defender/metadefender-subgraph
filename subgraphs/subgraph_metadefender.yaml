@@ -9,7 +9,7 @@ dataSources:
     network: mainnet
     source:
       # change here to LiquidityCertificate contract address.
-      address: '0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4'
+      address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 0
@@ -33,7 +33,7 @@ dataSources:
     network: mainnet
     source:
       # change here to LiquidityMedal contract address.
-      address: '0x638A246F0Ec8883eF68280293FFE8Cfbabe61B44'
+      address: '0x66F625B8c4c635af8b74ECe2d7eD0D58b4af3C3d'
       abi: LiquidityMedal
       # change here: the block you want to sync.
       startBlock: 0
@@ -49,4 +49,26 @@ dataSources:
       eventHandlers:
         - event: NewMedalMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleNewMedalMinted
+      file: ../handlers/handler.ts
+  - kind: ethereum/contract
+    name: Policy
+    network: mainnet
+    source:
+      # change here to Policy contract address.
+      address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
+      abi: Policy
+      # change here: the block you want to sync.
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Policy
+      abis:
+        - name: Policy
+          file: ../../artifacts/contracts/Policy.sol/Policy.json
+      eventHandlers:
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleNewPolicyMinted
       file: ../handlers/handler.ts

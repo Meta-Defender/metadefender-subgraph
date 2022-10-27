@@ -10,6 +10,17 @@ type LiquidityCertificate @entity {
     shadowDebt: BigInt!
 }
 
+type Policy @entity {
+    id: ID!
+    beneficiary: String!
+    policyId: BigInt!
+    coverage: BigInt!
+    deposit: BigInt!
+    enteredAt: BigInt!
+    expiredAt: BigInt!
+    shadowImpact: BigInt!
+}
+
 type LiquidityMedal @entity {
     # account address
     id: ID!

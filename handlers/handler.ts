@@ -1,9 +1,14 @@
-import { LiquidityCertificate, LiquidityMedal } from '../generated/schema';
+import {
+    LiquidityCertificate,
+    LiquidityMedal,
+    Policy,
+} from '../generated/schema';
 import { NewMedalMinted } from '../generated/LiquidityMedal/LiquidityMedal';
 import {
     NewLPMinted,
     LPBurned,
 } from '../generated/LiquidityCertificate/LiquidityCertificate';
+import { NewPolicyMinted } from '../generated/Policy/Policy';
 import * as graphTypes from '@graphprotocol/graph-ts';
 import { store } from '@graphprotocol/graph-ts';
 
@@ -17,6 +22,45 @@ export function handleNewLPMinted(event: NewLPMinted): void {
         event.params.rewardDebt,
         event.params.shadowDebt,
     );
+    return;
+}
+
+//     event newPolicyMinted(address beneficiary, uint policyId, uint coverage, uint deposit, uint enteredAt, uint expiredAt, uint shadowImpact);
+
+export function handleNewPolicyMinted(event: NewPolicyMinted): void {
+    updatePolicy(
+        event.params.beneficiary,
+        event.params.policyId,
+        event.params.coverage,
+        event.params.deposit,
+        event.params.enteredAt,
+        event.params.expiredAt,
+        event.params.shadowImpact,
+    );
+}
+
+export function updatePolicy(
+    beneficiary: graphTypes.Address,
+    policyId: graphTypes.BigInt,
+    coverage: graphTypes.BigInt,
+    deposit: graphTypes.BigInt,
+    enteredAt: graphTypes.BigInt,
+    expiredAt: graphTypes.BigInt,
+    shadowImpact: graphTypes.BigInt,
+): void {
+    let entity = Policy.load(policyId.toString());
+    if (entity == null) {
+        // in this scenario, the id of the entity is the same as the id of the policy
+        entity = new Policy(policyId.toString());
+    }
+    entity.beneficiary = beneficiary.toHexString();
+    entity.policyId = policyId;
+    entity.coverage = coverage;
+    entity.deposit = deposit;
+    entity.enteredAt = enteredAt;
+    entity.expiredAt = expiredAt;
+    entity.shadowImpact = shadowImpact;
+    entity.save();
     return;
 }
 
