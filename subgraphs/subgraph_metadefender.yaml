@@ -9,7 +9,7 @@ dataSources:
     network: mainnet
     source:
       # change here to LiquidityCertificate contract address.
-      address: '0x1429859428C0aBc9C2C47C8Ee9FBaf82cFA0F20f'
+      address: '0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 0
@@ -21,9 +21,11 @@ dataSources:
         - LiquidityCertificate
       abis:
         - name: LiquidityCertificate
-          file: ../build/contracts/LiquidityCertificate.json
+          file: ../../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
       eventHandlers:
-        - event: NewLPMinted(uint256,uint256,uint256,uint256,uint256,uint256)
+        - event: LPBurned(uint256)
+          handler: handleLPBurned
+        - event: NewLPMinted(address,uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleNewLPMinted
       file: ../handlers/handler.ts
   - kind: ethereum/contract
@@ -31,7 +33,7 @@ dataSources:
     network: mainnet
     source:
       # change here to LiquidityMedal contract address.
-      address: '0xB0D4afd8879eD9F52b28595d31B441D079B2Ca07'
+      address: '0x638A246F0Ec8883eF68280293FFE8Cfbabe61B44'
       abi: LiquidityMedal
       # change here: the block you want to sync.
       startBlock: 0
@@ -43,8 +45,8 @@ dataSources:
         - LiquidityMedal
       abis:
         - name: LiquidityMedal
-          file: ../build/contracts/LiquidityMedal.json
+          file: ../../artifacts/contracts/LiquidityMedal.sol/LiquidityMedal.json
       eventHandlers:
-        - event: NewMedalMinted(uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+        - event: NewMedalMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleNewMedalMinted
       file: ../handlers/handler.ts
