@@ -1,15 +1,15 @@
 specVersion: 0.0.4
-description: Example subgraph. 
+description: Subgraph for LiquidityCertificate.sol.
 repository: https://github.com/meta-verse-subgraph
 schema:
   file: ../schema/schema_metadefender.graphql
 dataSources:
   - kind: ethereum/contract
-    name: MetaDefender
+    name: LiquidityCertificate
     network: mainnet
     source:
-      # change here to your contract address.
-      address: '0xa513e6e4b8f2a923d98304ec87f64353c4d5c853'
+      # change here to LiquidityCertificate contract address.
+      address: '0x1429859428C0aBc9C2C47C8Ee9FBaf82cFA0F20f'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 0
@@ -25,4 +25,26 @@ dataSources:
       eventHandlers:
         - event: NewLPMinted(uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleNewLPMinted
+      file: ../handlers/handler.ts
+  - kind: ethereum/contract
+    name: LiquidityMedal
+    network: mainnet
+    source:
+      # change here to LiquidityMedal contract address.
+      address: '0xB0D4afd8879eD9F52b28595d31B441D079B2Ca07'
+      abi: LiquidityMedal
+      # change here: the block you want to sync.
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - LiquidityMedal
+      abis:
+        - name: LiquidityMedal
+          file: ../build/contracts/LiquidityMedal.json
+      eventHandlers:
+        - event: NewMedalMinted(uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleNewMedalMinted
       file: ../handlers/handler.ts
