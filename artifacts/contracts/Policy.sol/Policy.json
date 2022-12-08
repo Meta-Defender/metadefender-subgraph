@@ -99,25 +99,31 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "deposit",
+        "name": "fee",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "enteredAt",
+        "name": "duration",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "expiredAt",
+        "name": "standardRisk",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "shadowImpact",
+        "name": "enteredEpochIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "SPS",
         "type": "uint256"
       }
     ],
@@ -249,24 +255,6 @@
         "type": "bool"
       }
     ],
-    "name": "changeStatusIsCancelled",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "policyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "status",
-        "type": "bool"
-      }
-    ],
     "name": "changeStatusIsClaimApplying",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -286,6 +274,24 @@
       }
     ],
     "name": "changeStatusIsClaimed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "status",
+        "type": "bool"
+      }
+    ],
+    "name": "changeStatusIsSettled",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -352,22 +358,27 @@
           },
           {
             "internalType": "uint256",
-            "name": "deposit",
+            "name": "fee",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "enteredAt",
+            "name": "duration",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "expiredAt",
+            "name": "standardRisk",
             "type": "uint256"
           },
           {
+            "internalType": "uint64",
+            "name": "enteredEpochIndex",
+            "type": "uint64"
+          },
+          {
             "internalType": "uint256",
-            "name": "shadowImpact",
+            "name": "SPS",
             "type": "uint256"
           },
           {
@@ -382,7 +393,7 @@
           },
           {
             "internalType": "bool",
-            "name": "isCancelled",
+            "name": "isSettled",
             "type": "bool"
           }
         ],
@@ -404,6 +415,11 @@
       {
         "internalType": "address",
         "name": "_protocol",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IEpochManage",
+        "name": "_epochManage",
         "type": "address"
       }
     ],
@@ -444,7 +460,26 @@
         "type": "uint256"
       }
     ],
-    "name": "isCancelAvailable",
+    "name": "isClaimAvailable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "policyId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isSettleAvailable",
     "outputs": [
       {
         "internalType": "bool",
@@ -482,22 +517,27 @@
       },
       {
         "internalType": "uint256",
-        "name": "deposit",
+        "name": "fee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "enteredEpochIndex",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint256",
+        "name": "duration",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "enteredAt",
+        "name": "SPS",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "expiredAt",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "shadowImpact",
+        "name": "standardRisk",
         "type": "uint256"
       }
     ],

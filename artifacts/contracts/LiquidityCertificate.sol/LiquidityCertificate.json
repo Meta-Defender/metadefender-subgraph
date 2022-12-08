@@ -85,7 +85,7 @@
         "type": "uint256"
       }
     ],
-    "name": "LPBurned",
+    "name": "Expired",
     "type": "event"
   },
   {
@@ -106,31 +106,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "expiryTime",
+        "name": "enteredEpochIndex",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
         "name": "liquidity",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "rewardDebt",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "shadowDebt",
         "type": "uint256"
       }
     ],
@@ -173,24 +155,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "certificateId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rewards",
-        "type": "uint256"
-      }
-    ],
-    "name": "addRewardDebt",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -252,17 +216,30 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "certificateId",
         "type": "uint256"
       }
     ],
-    "name": "burn",
+    "name": "decreaseLiquidity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "certificateId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "currentEpochIndex",
+        "type": "uint64"
+      }
+    ],
+    "name": "expire",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -299,9 +276,24 @@
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "enteredAt",
-            "type": "uint256"
+            "internalType": "uint64",
+            "name": "enteredEpochIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitedEpochIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "rewardDebtEpochIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "signalWithdrawalEpochIndex",
+            "type": "uint64"
           },
           {
             "internalType": "uint256",
@@ -310,37 +302,18 @@
           },
           {
             "internalType": "uint256",
-            "name": "rewardDebt",
+            "name": "SPSLocked",
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "shadowDebt",
-            "type": "uint256"
+            "internalType": "bool",
+            "name": "isValid",
+            "type": "bool"
           }
         ],
         "internalType": "struct ILiquidityCertificate.CertificateInfo",
         "name": "",
         "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "certificateId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getEnteredAt",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -442,23 +415,13 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        "internalType": "uint64",
+        "name": "enteredEpochIndex",
+        "type": "uint64"
       },
       {
         "internalType": "uint256",
         "name": "liquidity",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rewardDebt",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "shadowDebt",
         "type": "uint256"
       }
     ],
@@ -484,6 +447,13 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "newEpochCreated",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -683,7 +653,20 @@
   },
   {
     "inputs": [],
-    "name": "totalCertificateLiquidity",
+    "name": "totalPendingEntranceCertificateLiquidity",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalPendingExitCertificateLiquidity",
     "outputs": [
       {
         "internalType": "uint256",
@@ -697,6 +680,19 @@
   {
     "inputs": [],
     "name": "totalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalValidCertificateLiquidity",
     "outputs": [
       {
         "internalType": "uint256",
@@ -726,6 +722,60 @@
       }
     ],
     "name": "transferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "certificateId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "currentEpochIndex",
+        "type": "uint64"
+      }
+    ],
+    "name": "updateRewardDebtEpochIndex",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "certificateId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "SPSLocked",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateSPSLocked",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "certificateId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "currentEpochIndex",
+        "type": "uint64"
+      }
+    ],
+    "name": "updateSignalWithdrawEpochIndex",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

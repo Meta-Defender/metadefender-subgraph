@@ -3,11 +3,13 @@ type LiquidityCertificate @entity {
     id: ID!
     owner: String!
     certificateId: BigInt!
-    timestamp: BigInt!
-    expiryTime: BigInt!
+    enteredEpochIndex: BigInt!
+    exitedEpochIndex: BigInt!
+    rewardDebtEpochIndex: BigInt!
+    signalWithdrawEpochIndex: BigInt!
     liquidity: BigInt!
-    rewardDebt: BigInt!
-    shadowDebt: BigInt!
+    SPSLocked: BigInt!
+    isValid: Boolean!
 }
 
 type Policy @entity {
@@ -15,21 +17,12 @@ type Policy @entity {
     beneficiary: String!
     policyId: BigInt!
     coverage: BigInt!
-    deposit: BigInt!
-    enteredAt: BigInt!
-    expiredAt: BigInt!
-    shadowImpact: BigInt!
-}
-
-type LiquidityMedal @entity {
-    # account address
-    id: ID!
-    owner: String!
-    medalId: BigInt!
-    enteredAt: BigInt!
-    exitedAt: BigInt!
-    liquidity: BigInt!
-    reserve: BigInt!
-    shadowDebt: BigInt!
-    marketShadow: BigInt!
+    fee: BigInt!
+    duration: BigInt!
+    standardRisk: BigInt!
+    enteredEpochIndex: BigInt!
+    SPS: BigInt!
+    isClaimed: Boolean!
+    isClaimApplying: Boolean!
+    isSettled: Boolean!
 }

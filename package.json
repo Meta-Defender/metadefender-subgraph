@@ -3,13 +3,13 @@
   "author": "tdergouzi",
   "description": "Ethereum example subgraph.",
   "scripts": {
-    "compile": "truffle compile",
+    "compile": "hardhat compile",
     "codegen": "graph codegen subgraphs/subgraph_metadefender.yaml",
     "create-local": "graph create --node http://localhost:8020/ metadefender_team/metadefender",
     "deploy-local": "graph deploy metadefender_team/metadefender subgraphs/subgraph_metadefender.yaml --node http://localhost:8020/ --ipfs http://localhost:5001",
     "remove-local": "graph remove --node http://localhost:8020/ metadefender_team/metadefender",
-    "build-example": "graph build subgraphs/subgraph_metadefender.yaml metadefender_team/metadefender",
-    "deploy-example-host": "graph deploy --product hosted-service ${host service subgraph name} subgraphs/subgraph_metadefender.yaml"
+    "build-subgrpah": "graph build subgraphs/subgraph_metadefender.yaml metadefender_team/metadefender",
+    "deploy-host": "graph deploy --product hosted-service ${host service subgraph name} subgraphs/subgraph_metadefender.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.33.0",
