@@ -33,7 +33,6 @@ function updateLiquidityCertificate(
     entity.enteredEpochIndex = enteredEpochIndex;
     entity.exitedEpochIndex = BigInt.zero();
     entity.rewardDebtEpochIndex = enteredEpochIndex;
-    entity.signalWithdrawEpochIndex = BigInt.zero();
     entity.liquidity = liquidity;
     entity.SPSLocked = BigInt.zero();
     entity.isValid = true;

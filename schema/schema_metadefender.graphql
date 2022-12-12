@@ -6,7 +6,6 @@ type LiquidityCertificate @entity {
     enteredEpochIndex: BigInt!
     exitedEpochIndex: BigInt!
     rewardDebtEpochIndex: BigInt!
-    signalWithdrawEpochIndex: BigInt!
     liquidity: BigInt!
     SPSLocked: BigInt!
     isValid: Boolean!
