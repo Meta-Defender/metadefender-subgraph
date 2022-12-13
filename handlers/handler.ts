@@ -86,7 +86,11 @@ export function updatePolicy(
     entity.fee = fee;
     entity.duration = duration;
     entity.standardRisk = standardRisk;
+    entity.enteredEpochIndex = enteredEpochIndex;
     entity.SPS = SPS;
+    entity.isClaimed = false;
+    entity.isClaimApplying = false;
+    entity.isSettled = false;
     entity.save();
     return;
 }

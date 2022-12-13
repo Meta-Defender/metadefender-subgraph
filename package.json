@@ -4,15 +4,16 @@
   "description": "Ethereum example subgraph.",
   "scripts": {
     "compile": "hardhat compile",
-    "codegen": "graph codegen subgraphs/subgraph_metadefender.yaml",
+    "codegen": "graph codegen subgraph.yaml",
+    "auth": "graph auth --product hosted-service 693f74a40fd684b03afad5162ae52130",
     "create-local": "graph create --node http://localhost:8020/ metadefender_team/metadefender",
-    "deploy-local": "graph deploy metadefender_team/metadefender subgraphs/subgraph_metadefender.yaml --node http://localhost:8020/ --ipfs http://localhost:5001",
+    "deploy-local": "graph deploy metadefender_team/metadefender subgraph.yaml --node http://localhost:8020/ --ipfs http://localhost:5001",
     "remove-local": "graph remove --node http://localhost:8020/ metadefender_team/metadefender",
-    "build-subgrpah": "graph build subgraphs/subgraph_metadefender.yaml metadefender_team/metadefender",
-    "deploy-host": "graph deploy --product hosted-service ${host service subgraph name} subgraphs/subgraph_metadefender.yaml"
+    "build-subgrpah": "graph build subgraph.yaml metadefender_team/metadefender",
+    "deploy-host": "graph deploy --product hosted-service lutianzhou001/md-mumbai"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.33.0",
+    "@graphprotocol/graph-cli": "^0.33.0",
     "@graphprotocol/graph-ts": "0.27.0",
     "@nomiclabs/buidler-waffle": "^2.1.0",
     "babel-polyfill": "^6.26.0",

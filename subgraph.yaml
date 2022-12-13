@@ -2,19 +2,22 @@ specVersion: 0.0.4
 description: Subgraph for LiquidityCertificate.sol.
 repository: https://github.com/Meta-Defender/metadefender-subgraph/tree/vincent-dev-subgraph
 schema:
-  file: ../schema/schema_metadefender.graphql
+  file: ./schema/schema_metadefender.graphql
 dataSources:
   - kind: ethereum/contract
     name: LiquidityCertificate
-    network: mainnet
+    # in local env
+    # network: mainnet
+    # in testnet
+    network: mumbai
     source:
       # change here to LiquidityCertificate contract address.
       # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       # goerli network
-      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+      address: '0xf031867921939647D48E09f2D3D24ae8D521c2Ad'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
-      startBlock: 0
+      startBlock: 29000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -23,24 +26,27 @@ dataSources:
         - LiquidityCertificate
       abis:
         - name: LiquidityCertificate
-          file: ../../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
+          file: ../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
       eventHandlers:
         - event: Expired(uint256)
           handler: handleLPExpired
         - event: NewLPMinted(address,uint256,uint256,uint256)
           handler: handleNewLPMinted
-      file: ../handlers/handler.ts
+      file: ./handlers/handler.ts
   - kind: ethereum/contract
     name: Policy
-    network: mainnet
+    # in local env
+    # network: mainnet
+    # in testnet
+    network: mumbai
     source:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0'
+      address: '0xd7137d0E624261374c7FD597b604CE3aD3466d6A'
       abi: Policy
       # change here: the block you want to sync.
-      startBlock: 0
+      startBlock: 29000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -49,8 +55,8 @@ dataSources:
         - Policy
       abis:
         - name: Policy
-          file: ../../artifacts/contracts/Policy.sol/Policy.json
+          file: ../artifacts/contracts/Policy.sol/Policy.json
       eventHandlers:
         - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
           handler: handleNewPolicyMinted
-      file: ../handlers/handler.ts
+      file: ./handlers/handler.ts
