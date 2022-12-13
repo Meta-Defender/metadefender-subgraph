@@ -14,7 +14,7 @@ dataSources:
       # change here to LiquidityCertificate contract address.
       # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       # goerli network
-      address: '0xf031867921939647D48E09f2D3D24ae8D521c2Ad'
+      address: '0x41B0cfA8C04Fd8a25644cC22F8a81AABe126FD30'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 29000000
@@ -43,7 +43,7 @@ dataSources:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0xd7137d0E624261374c7FD597b604CE3aD3466d6A'
+      address: '0x30d7cE72A7e8B65B4D0fF9A6Cf06203663f0A713'
       abi: Policy
       # change here: the block you want to sync.
       startBlock: 29000000
