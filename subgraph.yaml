@@ -14,10 +14,10 @@ dataSources:
       # change here to LiquidityCertificate contract address.
       # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       # goerli network
-      address: '0x41B0cfA8C04Fd8a25644cC22F8a81AABe126FD30'
+      address: '0x24cafAEF983860A4560C9C6963Eb64fC4863B9C0'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
-      startBlock: 29000000
+      startBlock: 29700000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -30,7 +30,7 @@ dataSources:
       eventHandlers:
         - event: Expired(uint256)
           handler: handleLPExpired
-        - event: NewLPMinted(address,uint256,uint256,uint256)
+        - event: NewLPMinted(address,uint256,uint256,uint256,address)
           handler: handleNewLPMinted
       file: ./handlers/handler.ts
   - kind: ethereum/contract
@@ -43,10 +43,10 @@ dataSources:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0x30d7cE72A7e8B65B4D0fF9A6Cf06203663f0A713'
+      address: '0x42596271010325ea79417d9F8C0456E8A37492d1'
       abi: Policy
       # change here: the block you want to sync.
-      startBlock: 29000000
+      startBlock: 29700000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -57,6 +57,6 @@ dataSources:
         - name: Policy
           file: ../artifacts/contracts/Policy.sol/Policy.json
       eventHandlers:
-        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address)
           handler: handleNewPolicyMinted
       file: ./handlers/handler.ts

@@ -1,6 +1,7 @@
 type LiquidityCertificate @entity {
     # account address
     id: ID!
+    protocol: String!
     owner: String!
     certificateId: BigInt!
     enteredEpochIndex: BigInt!
@@ -13,6 +14,7 @@ type LiquidityCertificate @entity {
 
 type Policy @entity {
     id: ID!
+    protocol: String!
     beneficiary: String!
     policyId: BigInt!
     coverage: BigInt!

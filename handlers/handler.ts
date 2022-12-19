@@ -5,7 +5,13 @@ import {
 } from '../generated/LiquidityCertificate/LiquidityCertificate';
 import { NewPolicyMinted } from '../generated/Policy/Policy';
 import * as graphTypes from '@graphprotocol/graph-ts';
-import { BigInt } from '@graphprotocol/graph-ts';
+import {
+    BigInt,
+    crypto,
+    Bytes,
+    ByteArray,
+    Value,
+} from '@graphprotocol/graph-ts';
 
 export function handleNewLPMinted(event: NewLPMinted): void {
     updateLiquidityCertificate(
@@ -13,6 +19,7 @@ export function handleNewLPMinted(event: NewLPMinted): void {
         event.params.certificateId,
         event.params.enteredEpochIndex,
         event.params.liquidity,
+        event.params.protocol,
     );
     return;
 }
@@ -22,12 +29,18 @@ function updateLiquidityCertificate(
     certificateId: graphTypes.BigInt,
     enteredEpochIndex: graphTypes.BigInt,
     liquidity: graphTypes.BigInt,
+    protocol: graphTypes.Address,
 ): void {
-    let entity = LiquidityCertificate.load(certificateId.toString());
+    const bytes = ByteArray.fromUTF8(
+        protocol.toString() + certificateId.toString(),
+    );
+    const str = crypto.keccak256(bytes).toHexString();
+    let entity = LiquidityCertificate.load(str);
     if (entity == null) {
         // in this scenario, the id of the entity is the same as the id of the certificate
-        entity = new LiquidityCertificate(certificateId.toString());
+        entity = new LiquidityCertificate(str);
     }
+    entity.protocol = protocol.toHexString();
     entity.owner = owner.toHexString();
     entity.certificateId = certificateId;
     entity.enteredEpochIndex = enteredEpochIndex;
@@ -62,6 +75,7 @@ export function handleNewPolicyMinted(event: NewPolicyMinted): void {
         event.params.standardRisk,
         event.params.enteredEpochIndex,
         event.params.SPS,
+        event.params.protocol,
     );
 }
 
@@ -74,12 +88,16 @@ export function updatePolicy(
     standardRisk: graphTypes.BigInt,
     enteredEpochIndex: graphTypes.BigInt,
     SPS: graphTypes.BigInt,
+    protocol: graphTypes.Address,
 ): void {
-    let entity = Policy.load(policyId.toString());
+    const bytes = ByteArray.fromUTF8(protocol.toString() + policyId.toString());
+    const str = crypto.keccak256(bytes).toHexString();
+    let entity = Policy.load(str);
     if (entity == null) {
         // in this scenario, the id of the entity is the same as the id of the policy
-        entity = new Policy(policyId.toString());
+        entity = new Policy(str);
     }
+    entity.protocol = protocol.toHexString();
     entity.beneficiary = beneficiary.toHexString();
     entity.policyId = policyId;
     entity.coverage = coverage;
