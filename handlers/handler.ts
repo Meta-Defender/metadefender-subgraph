@@ -2,16 +2,27 @@ import { LiquidityCertificate, Policy } from '../generated/schema';
 import {
     NewLPMinted,
     Expired,
+    Transfer,
 } from '../generated/LiquidityCertificate/LiquidityCertificate';
 import { NewPolicyMinted } from '../generated/Policy/Policy';
 import * as graphTypes from '@graphprotocol/graph-ts';
-import {
-    BigInt,
-    crypto,
-    Bytes,
-    ByteArray,
-    Value,
-} from '@graphprotocol/graph-ts';
+import { BigInt, crypto, ByteArray } from '@graphprotocol/graph-ts';
+
+export function handleTransfer(event: Transfer): void {
+    const to = event.params.to;
+    const bytes = ByteArray.fromUTF8(
+        event.address.toHexString() + event.params.tokenId.toString(),
+    );
+    const str = crypto.keccak256(bytes).toHexString();
+    const entity = LiquidityCertificate.load(str);
+    if (entity != null) {
+        if (entity.owner != to.toHexString()) {
+            entity.owner = to.toHexString();
+            entity.save();
+        }
+    }
+    return;
+}
 
 export function handleNewLPMinted(event: NewLPMinted): void {
     updateLiquidityCertificate(
@@ -20,6 +31,7 @@ export function handleNewLPMinted(event: NewLPMinted): void {
         event.params.enteredEpochIndex,
         event.params.liquidity,
         event.params.protocol,
+        event.address,
     );
     return;
 }
@@ -30,9 +42,10 @@ function updateLiquidityCertificate(
     enteredEpochIndex: graphTypes.BigInt,
     liquidity: graphTypes.BigInt,
     protocol: graphTypes.Address,
+    eventAddress: graphTypes.Address,
 ): void {
     const bytes = ByteArray.fromUTF8(
-        protocol.toString() + certificateId.toString(),
+        eventAddress.toHexString() + certificateId.toString(),
     );
     const str = crypto.keccak256(bytes).toHexString();
     let entity = LiquidityCertificate.load(str);
@@ -54,9 +67,11 @@ function updateLiquidityCertificate(
 }
 
 export function handleLPExpired(event: Expired): void {
-    const entity = LiquidityCertificate.load(
-        event.params.certificateId.toString(),
+    const bytes = ByteArray.fromUTF8(
+        event.address.toHexString() + event.params.certificateId.toString(),
     );
+    const str = crypto.keccak256(bytes).toHexString();
+    const entity = LiquidityCertificate.load(str);
     if (entity == null) {
         throw new Error('Certificate does not exist');
     }
@@ -76,6 +91,7 @@ export function handleNewPolicyMinted(event: NewPolicyMinted): void {
         event.params.enteredEpochIndex,
         event.params.SPS,
         event.params.protocol,
+        event.address,
     );
 }
 
@@ -89,8 +105,11 @@ export function updatePolicy(
     enteredEpochIndex: graphTypes.BigInt,
     SPS: graphTypes.BigInt,
     protocol: graphTypes.Address,
+    eventAddress: graphTypes.Address,
 ): void {
-    const bytes = ByteArray.fromUTF8(protocol.toString() + policyId.toString());
+    const bytes = ByteArray.fromUTF8(
+        eventAddress.toHexString() + policyId.toString(),
+    );
     const str = crypto.keccak256(bytes).toHexString();
     let entity = Policy.load(str);
     if (entity == null) {

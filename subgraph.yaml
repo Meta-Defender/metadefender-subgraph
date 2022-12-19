@@ -17,7 +17,7 @@ dataSources:
       address: '0x24cafAEF983860A4560C9C6963Eb64fC4863B9C0'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
-      startBlock: 29700000
+      startBlock: 29800000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -28,6 +28,8 @@ dataSources:
         - name: LiquidityCertificate
           file: ../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
       eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
         - event: Expired(uint256)
           handler: handleLPExpired
         - event: NewLPMinted(address,uint256,uint256,uint256,address)
@@ -46,7 +48,7 @@ dataSources:
       address: '0x42596271010325ea79417d9F8C0456E8A37492d1'
       abi: Policy
       # change here: the block you want to sync.
-      startBlock: 29700000
+      startBlock: 29800000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
