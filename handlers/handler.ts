@@ -4,7 +4,12 @@ import {
     Expired,
     Transfer,
 } from '../generated/LiquidityCertificate/LiquidityCertificate';
-import { NewPolicyMinted } from '../generated/Policy/Policy';
+import {
+    NewPolicyMinted,
+    PolicyClaimed,
+    PolicySettled,
+    PolicyUnderClaimApplying,
+} from '../generated/Policy/Policy';
 import * as graphTypes from '@graphprotocol/graph-ts';
 import { BigInt, crypto, ByteArray } from '@graphprotocol/graph-ts';
 
@@ -93,6 +98,50 @@ export function handleNewPolicyMinted(event: NewPolicyMinted): void {
         event.params.protocol,
         event.address,
     );
+}
+
+export function handlePolicyUnderClaimApplying(
+    event: PolicyUnderClaimApplying,
+): void {
+    const bytes = ByteArray.fromUTF8(
+        event.address.toHexString() + event.params.policyId.toString(),
+    );
+    const str = crypto.keccak256(bytes).toHexString();
+    const entity = Policy.load(str);
+    if (entity == null) {
+        throw new Error('Policy does not exist');
+    }
+    entity.isClaimApplying = event.params.status;
+    entity.save();
+    return;
+}
+
+export function handlePolicyClaimed(event: PolicyClaimed): void {
+    const bytes = ByteArray.fromUTF8(
+        event.address.toHexString() + event.params.policyId.toString(),
+    );
+    const str = crypto.keccak256(bytes).toHexString();
+    const entity = Policy.load(str);
+    if (entity == null) {
+        throw new Error('Policy does not exist');
+    }
+    entity.isClaimed = event.params.status;
+    entity.save();
+    return;
+}
+
+export function handlePolicySettled(event: PolicySettled): void {
+    const bytes = ByteArray.fromUTF8(
+        event.address.toHexString() + event.params.policyId.toString(),
+    );
+    const str = crypto.keccak256(bytes).toHexString();
+    const entity = Policy.load(str);
+    if (entity == null) {
+        throw new Error('Policy does not exist');
+    }
+    entity.isSettled = event.params.status;
+    entity.save();
+    return;
 }
 
 export function updatePolicy(
