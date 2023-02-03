@@ -5,7 +5,7 @@ schema:
   file: ./schema/schema_metadefender.graphql
 dataSources:
   - kind: ethereum/contract
-    name: LiquidityCertificate
+    name: LiquidityCertificate_1
     # in local env
     # network: mainnet
     # in testnet
@@ -14,10 +14,10 @@ dataSources:
       # change here to LiquidityCertificate contract address.
       # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       # goerli network
-      address: '0x75563f935a366E88e0440Fc57Ed9D4423ffaab52'
+      address: '0xd33924b8a9bE7bfD915745626A8F60199258fC35'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
-      startBlock: 29800000
+      startBlock: 30000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -36,7 +36,38 @@ dataSources:
           handler: handleNewLPMinted
       file: ./handlers/handler.ts
   - kind: ethereum/contract
-    name: Policy
+    name: LiquidityCertificate_2
+    # in local env
+    # network: mainnet
+    # in testnet
+    network: mumbai
+    source:
+      # change here to LiquidityCertificate contract address.
+      # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
+      # goerli network
+      address: '0xa4C9b2B31e5B5FF77e679C9249E7fe31bA504471'
+      abi: LiquidityCertificate
+      # change here: the block you want to sync.
+      startBlock: 30000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - LiquidityCertificate
+      abis:
+        - name: LiquidityCertificate
+          file: ../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Expired(uint256)
+          handler: handleLPExpired
+        - event: NewLPMinted(address,uint256,uint256,uint256,address)
+          handler: handleNewLPMinted
+      file: ./handlers/handler.ts
+  - kind: ethereum/contract
+    name: Policy_1
     # in local env
     # network: mainnet
     # in testnet
@@ -45,10 +76,10 @@ dataSources:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0x8E3A7F266578cf730DD559C1Ebe497a9750539Ba'
+      address: '0x74F194741a9f57f324212E8e58a1134443F224F5'
       abi: Policy
       # change here: the block you want to sync.
-      startBlock: 29800000
+      startBlock: 30000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -65,6 +96,65 @@ dataSources:
           handler: handlePolicySettled
         - event: PolicyUnderClaimApplying(uint256,bool)
           handler: handlePolicyUnderClaimApplying
-        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address)
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
           handler: handleNewPolicyMinted
+      file: ./handlers/handler.ts
+  - kind: ethereum/contract
+    name: Policy_2
+    # in local env
+    # network: mainnet
+    # in testnet
+    network: mumbai
+    source:
+      # change here to Policy contract address.
+      # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
+      # goerli network
+      address: '0xc68ed7133bfA46A0edcb719885B59B476973Ea65'
+      abi: Policy
+      # change here: the block you want to sync.
+      startBlock: 30000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Policy
+      abis:
+        - name: Policy
+          file: ../artifacts/contracts/Policy.sol/Policy.json
+      eventHandlers:
+        - event: PolicyClaimed(uint256,bool)
+          handler: handlePolicyClaimed
+        - event: PolicySettled(uint256,bool)
+          handler: handlePolicySettled
+        - event: PolicyUnderClaimApplying(uint256,bool)
+          handler: handlePolicyUnderClaimApplying
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
+          handler: handleNewPolicyMinted
+      file: ./handlers/handler.ts
+  - kind: ethereum/contract
+    name: MarketRegistry
+    network: mumbai
+    source:
+      # change here to Policy contract address.
+      # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
+      # goerli network
+      address: '0xF4059c1534fDbbE95062E42bfa5E208B3E6697A4'
+      abi: MetaDefenderMarketRegistry
+      # change here: the block you want to sync.
+      startBlock: 30000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Markets
+      abis:
+        - name: MetaDefenderMarketRegistry
+          file: ../artifacts/contracts/periphery/MetaDefenderMarketsRegistry.sol/MetaDefenderMarketsRegistry.json
+      eventHandlers:
+        - event: MarketAdded(address,address,address,address,string,string,string,string,string)
+          handler: handleMarketAdded
+        - event: MarketRemoved(address)
+          handler: handleMarketRemoved
       file: ./handlers/handler.ts

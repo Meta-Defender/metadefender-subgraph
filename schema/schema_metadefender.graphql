@@ -12,9 +12,24 @@ type LiquidityCertificate @entity {
     isValid: Boolean!
 }
 
+type Market @entity {
+    id: ID!
+    protocol: String!
+    liquidityCertificate: String!
+    policy: String!
+    epochManage: String!
+    marketName: String!
+    marketDescription: String!
+    marketPaymentToken: String!
+    marketProtectionType: String!
+    network: String!
+    isValid: Boolean!
+}
+
 type Policy @entity {
     id: ID!
     protocol: String!
+    epochManage: String!
     beneficiary: String!
     policyId: BigInt!
     coverage: BigInt!

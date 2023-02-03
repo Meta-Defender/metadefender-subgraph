@@ -1,17 +1,21 @@
-import { LiquidityCertificate, Policy } from '../generated/schema';
+import { LiquidityCertificate, Market, Policy } from '../generated/schema';
 import {
     NewLPMinted,
     Expired,
     Transfer,
-} from '../generated/LiquidityCertificate/LiquidityCertificate';
+} from '../generated/LiquidityCertificate_1/LiquidityCertificate';
 import {
     NewPolicyMinted,
     PolicyClaimed,
     PolicySettled,
     PolicyUnderClaimApplying,
-} from '../generated/Policy/Policy';
+} from '../generated/Policy_1/Policy';
 import * as graphTypes from '@graphprotocol/graph-ts';
 import { BigInt, crypto, ByteArray } from '@graphprotocol/graph-ts';
+import {
+    MarketAdded,
+    MarketRemoved,
+} from '../generated/MarketRegistry/MetaDefenderMarketRegistry';
 
 export function handleTransfer(event: Transfer): void {
     const to = event.params.to;
@@ -96,8 +100,28 @@ export function handleNewPolicyMinted(event: NewPolicyMinted): void {
         event.params.enteredEpochIndex,
         event.params.SPS,
         event.params.protocol,
+        event.params.epochManage,
         event.address,
     );
+}
+
+export function handleMarketAdded(event: MarketAdded): void {
+    updateMarket(
+        event.params.metaDefender,
+        event.params.liquidityCertificate,
+        event.params.policy,
+        event.params.epochManage,
+        event.params.marketName,
+        event.params.marketDescription,
+        event.params.marketPaymentToken,
+        event.params.marketProtectionType,
+        event.params.network,
+        true,
+    );
+}
+
+export function handleMarketRemoved(event: MarketRemoved): void {
+    removeMarket(event.params.metaDefender);
 }
 
 export function handlePolicyUnderClaimApplying(
@@ -144,6 +168,48 @@ export function handlePolicySettled(event: PolicySettled): void {
     return;
 }
 
+export function removeMarket(metaDefender: graphTypes.Address): void {
+    const entity = Market.load(metaDefender.toHexString());
+    if (entity == null) {
+        throw new Error('Market does not exist');
+    }
+    entity.isValid = false;
+    entity.save();
+    return;
+}
+
+export function updateMarket(
+    metaDefender: graphTypes.Address,
+    liquidityCertificate: graphTypes.Address,
+    policy: graphTypes.Address,
+    epochManage: graphTypes.Address,
+    marketName: string,
+    marketDescription: string,
+    marketPaymentToken: string,
+    protectionType: string,
+    network: string,
+    isValid: boolean,
+): void {
+    const bytes = ByteArray.fromUTF8(metaDefender.toHexString());
+    const str = crypto.keccak256(bytes).toHexString();
+    let entity = Market.load(str);
+    if (entity == null) {
+        entity = new Market(str);
+    }
+    entity.protocol = metaDefender.toHexString();
+    entity.liquidityCertificate = liquidityCertificate.toHexString();
+    entity.policy = policy.toHexString();
+    entity.epochManage = epochManage.toHexString();
+    entity.marketName = marketName;
+    entity.marketDescription = marketDescription;
+    entity.marketPaymentToken = marketPaymentToken;
+    entity.marketProtectionType = protectionType;
+    entity.network = network;
+    entity.isValid = isValid;
+    entity.save();
+    return;
+}
+
 export function updatePolicy(
     beneficiary: graphTypes.Address,
     policyId: graphTypes.BigInt,
@@ -154,6 +220,7 @@ export function updatePolicy(
     enteredEpochIndex: graphTypes.BigInt,
     SPS: graphTypes.BigInt,
     protocol: graphTypes.Address,
+    epochMange: graphTypes.Address,
     eventAddress: graphTypes.Address,
 ): void {
     const bytes = ByteArray.fromUTF8(
@@ -166,6 +233,7 @@ export function updatePolicy(
         entity = new Policy(str);
     }
     entity.protocol = protocol.toHexString();
+    entity.epochManage = epochMange.toHexString();
     entity.beneficiary = beneficiary.toHexString();
     entity.policyId = policyId;
     entity.coverage = coverage;
