@@ -1,5 +1,5 @@
-specVersion: 0.0.4
-description: Subgraph for LiquidityCertificate.sol.
+specVersion: 0.0.5
+description: Subgraph for METADEFENDER.
 repository: https://github.com/Meta-Defender/metadefender-subgraph/tree/vincent-dev-subgraph
 schema:
   file: ./schema/schema_metadefender.graphql
@@ -14,7 +14,7 @@ dataSources:
       # change here to LiquidityCertificate contract address.
       # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       # goerli network
-      address: '0xd33924b8a9bE7bfD915745626A8F60199258fC35'
+      address: '0xFB2B684a92DC207f494BDa81F3bc213DF563b66e'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 30000000
@@ -45,7 +45,7 @@ dataSources:
       # change here to LiquidityCertificate contract address.
       # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
       # goerli network
-      address: '0xa4C9b2B31e5B5FF77e679C9249E7fe31bA504471'
+      address: '0x7c10EF379D5a26d45D0Abf87881e2C31e283a1f3'
       abi: LiquidityCertificate
       # change here: the block you want to sync.
       startBlock: 30000000
@@ -76,7 +76,7 @@ dataSources:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0x74F194741a9f57f324212E8e58a1134443F224F5'
+      address: '0x3F6367006a21C3a0D91a628F9Fc49c0Cba9E543A'
       abi: Policy
       # change here: the block you want to sync.
       startBlock: 30000000
@@ -96,7 +96,7 @@ dataSources:
           handler: handlePolicySettled
         - event: PolicyUnderClaimApplying(uint256,bool)
           handler: handlePolicyUnderClaimApplying
-        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
           handler: handleNewPolicyMinted
       file: ./handlers/handler.ts
   - kind: ethereum/contract
@@ -109,7 +109,7 @@ dataSources:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0xc68ed7133bfA46A0edcb719885B59B476973Ea65'
+      address: '0xAbbF0c902215052b4228a21b4dc2B8e7f28a0c55'
       abi: Policy
       # change here: the block you want to sync.
       startBlock: 30000000
@@ -129,7 +129,7 @@ dataSources:
           handler: handlePolicySettled
         - event: PolicyUnderClaimApplying(uint256,bool)
           handler: handlePolicyUnderClaimApplying
-        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
           handler: handleNewPolicyMinted
       file: ./handlers/handler.ts
   - kind: ethereum/contract

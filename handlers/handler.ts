@@ -95,6 +95,7 @@ export function handleNewPolicyMinted(event: NewPolicyMinted): void {
         event.params.policyId,
         event.params.coverage,
         event.params.fee,
+        event.params.timestamp,
         event.params.duration,
         event.params.standardRisk,
         event.params.enteredEpochIndex,
@@ -169,7 +170,9 @@ export function handlePolicySettled(event: PolicySettled): void {
 }
 
 export function removeMarket(metaDefender: graphTypes.Address): void {
-    const entity = Market.load(metaDefender.toHexString());
+    const bytes = ByteArray.fromUTF8(metaDefender.toHexString());
+    const str = crypto.keccak256(bytes).toHexString();
+    const entity = Market.load(str);
     if (entity == null) {
         throw new Error('Market does not exist');
     }
@@ -215,6 +218,7 @@ export function updatePolicy(
     policyId: graphTypes.BigInt,
     coverage: graphTypes.BigInt,
     fee: graphTypes.BigInt,
+    timestamp: graphTypes.BigInt,
     duration: graphTypes.BigInt,
     standardRisk: graphTypes.BigInt,
     enteredEpochIndex: graphTypes.BigInt,
@@ -236,6 +240,7 @@ export function updatePolicy(
     entity.epochManage = epochMange.toHexString();
     entity.beneficiary = beneficiary.toHexString();
     entity.policyId = policyId;
+    entity.timestamp = timestamp;
     entity.coverage = coverage;
     entity.fee = fee;
     entity.duration = duration;
