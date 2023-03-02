@@ -1,137 +1,9 @@
 specVersion: 0.0.5
-description: Subgraph for METADEFENDER.
+description: Subgraph for MetaDefender.
 repository: https://github.com/Meta-Defender/metadefender-subgraph/tree/vincent-dev-subgraph
 schema:
   file: ./schema/schema_metadefender.graphql
 dataSources:
-  - kind: ethereum/contract
-    name: LiquidityCertificate_1
-    # in local env
-    # network: mainnet
-    # in testnet
-    network: mumbai
-    source:
-      # change here to LiquidityCertificate contract address.
-      # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
-      # goerli network
-      address: '0xFB2B684a92DC207f494BDa81F3bc213DF563b66e'
-      abi: LiquidityCertificate
-      # change here: the block you want to sync.
-      startBlock: 30000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - LiquidityCertificate
-      abis:
-        - name: LiquidityCertificate
-          file: ../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-        - event: Expired(uint256)
-          handler: handleLPExpired
-        - event: NewLPMinted(address,uint256,uint256,uint256,address)
-          handler: handleNewLPMinted
-      file: ./handlers/handler.ts
-  - kind: ethereum/contract
-    name: LiquidityCertificate_2
-    # in local env
-    # network: mainnet
-    # in testnet
-    network: mumbai
-    source:
-      # change here to LiquidityCertificate contract address.
-      # address: '0xB377a2EeD7566Ac9fCb0BA673604F9BF875e2Bab'
-      # goerli network
-      address: '0x7c10EF379D5a26d45D0Abf87881e2C31e283a1f3'
-      abi: LiquidityCertificate
-      # change here: the block you want to sync.
-      startBlock: 30000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - LiquidityCertificate
-      abis:
-        - name: LiquidityCertificate
-          file: ../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-        - event: Expired(uint256)
-          handler: handleLPExpired
-        - event: NewLPMinted(address,uint256,uint256,uint256,address)
-          handler: handleNewLPMinted
-      file: ./handlers/handler.ts
-  - kind: ethereum/contract
-    name: Policy_1
-    # in local env
-    # network: mainnet
-    # in testnet
-    network: mumbai
-    source:
-      # change here to Policy contract address.
-      # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
-      # goerli network
-      address: '0x3F6367006a21C3a0D91a628F9Fc49c0Cba9E543A'
-      abi: Policy
-      # change here: the block you want to sync.
-      startBlock: 30000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - Policy
-      abis:
-        - name: Policy
-          file: ../artifacts/contracts/Policy.sol/Policy.json
-      eventHandlers:
-        - event: PolicyClaimed(uint256,bool)
-          handler: handlePolicyClaimed
-        - event: PolicySettled(uint256,bool)
-          handler: handlePolicySettled
-        - event: PolicyUnderClaimApplying(uint256,bool)
-          handler: handlePolicyUnderClaimApplying
-        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
-          handler: handleNewPolicyMinted
-      file: ./handlers/handler.ts
-  - kind: ethereum/contract
-    name: Policy_2
-    # in local env
-    # network: mainnet
-    # in testnet
-    network: mumbai
-    source:
-      # change here to Policy contract address.
-      # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
-      # goerli network
-      address: '0xAbbF0c902215052b4228a21b4dc2B8e7f28a0c55'
-      abi: Policy
-      # change here: the block you want to sync.
-      startBlock: 30000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - Policy
-      abis:
-        - name: Policy
-          file: ../artifacts/contracts/Policy.sol/Policy.json
-      eventHandlers:
-        - event: PolicyClaimed(uint256,bool)
-          handler: handlePolicyClaimed
-        - event: PolicySettled(uint256,bool)
-          handler: handlePolicySettled
-        - event: PolicyUnderClaimApplying(uint256,bool)
-          handler: handlePolicyUnderClaimApplying
-        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
-          handler: handleNewPolicyMinted
-      file: ./handlers/handler.ts
   - kind: ethereum/contract
     name: MarketRegistry
     network: mumbai
@@ -139,10 +11,10 @@ dataSources:
       # change here to Policy contract address.
       # address: '0x8bCe54ff8aB45CB075b044AE117b8fD91F9351aB'
       # goerli network
-      address: '0xF4059c1534fDbbE95062E42bfa5E208B3E6697A4'
+      address: '0xCDFA412759B6BBFAf15d5DeE7eD532E90E5fE82c'
       abi: MetaDefenderMarketRegistry
       # change here: the block you want to sync.
-      startBlock: 30000000
+      startBlock: 32000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -157,4 +29,52 @@ dataSources:
           handler: handleMarketAdded
         - event: MarketRemoved(address)
           handler: handleMarketRemoved
-      file: ./handlers/handler.ts
+      file: ./handlers/handleMarkets.ts
+
+templates:
+  - name: Policy
+    kind: ethereum/contract
+    network: mumbai
+    source:
+      abi: Policy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./handlers/handleNFTs.ts
+      entities:
+        - Policy
+      abis:
+        - name: Policy
+          file: ../artifacts/contracts/Policy.sol/Policy.json
+      eventHandlers:
+        - event: PolicyClaimed(uint256,bool)
+          handler: handlePolicyClaimed
+        - event: PolicySettled(uint256,bool)
+          handler: handlePolicySettled
+        - event: PolicyUnderClaimApplying(uint256,bool)
+          handler: handlePolicyUnderClaimApplying
+        - event: NewPolicyMinted(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address)
+          handler: handleNewPolicyMinted
+  - name: LiquidityCertificate
+    kind: ethereum/contract
+    network: mumbai
+    source:
+      abi: LiquidityCertificate
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./handlers/handleNFTs.ts
+      entities:
+        - LiquidityCertificate
+      abis:
+          - name: LiquidityCertificate
+            file: ../artifacts/contracts/LiquidityCertificate.sol/LiquidityCertificate.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Expired(uint256)
+          handler: handleLPExpired
+        - event: NewLPMinted(address,uint256,uint256,uint256,address)
+          handler: handleNewLPMinted
