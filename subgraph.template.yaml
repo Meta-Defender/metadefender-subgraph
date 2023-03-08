@@ -6,10 +6,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: MarketRegistry
-    network: arbitrum-goerli
+    network: {{network}}
     source:
       abi: MetaDefenderMarketRegistry
-      address: '0xa2dac1d984F3a8ED7b5D658E7a38be7978aa278f'
+      address: '{{metaDefenderMarketsRegistry}}'
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -28,7 +28,7 @@ dataSources:
 templates:
   - name: Policy
     kind: ethereum/contract
-    network: arbitrum-goerli
+    network: {{network}}
     source:
       abi: Policy
     mapping:
@@ -52,7 +52,7 @@ templates:
           handler: handleNewPolicyMinted
   - name: LiquidityCertificate
     kind: ethereum/contract
-    network: arbitrum-goerli
+    network: {{network}}
     source:
       abi: LiquidityCertificate
     mapping:
