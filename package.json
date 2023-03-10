@@ -4,7 +4,7 @@
   "description": "Ethereum subgraph.",
   "scripts": {
     "prepare:mumbai": "mustache ../deployments/.env.mumbai.json subgraph.template.yaml > subgraph.yaml",
-    "prepare:arbitrum-goerli": "mustache ../deployments/.env.arbitrum_goerli.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:arbitrum-goerli": "mustache ../deployments/.env.arbitrum-goerli.json subgraph.template.yaml > subgraph.yaml",
     "compile": "hardhat compile",
     "codegen": "graph codegen",
     "build": "graph build",
@@ -13,7 +13,7 @@
     "deploy-local": "graph deploy metadefender_team/metadefender subgraph.yaml --node http://localhost:8020/ --ipfs http://localhost:5001",
     "remove-local": "graph remove --node http://localhost:8020/ metadefender_team/metadefender",
     "deploy-host:mumbai": "graph deploy --product hosted-service lutianzhou001/md-mumbai",
-    "deploy-host:arbitrum-goerli": "graph deploy --product hosted-service lutianzhou001/metadefender"
+    "deploy-host:arbitrum-goerli": "graph deploy --product hosted-service lutianzhou001/md-mumbai"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.33.0",

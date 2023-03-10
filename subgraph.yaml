@@ -9,7 +9,7 @@ dataSources:
     network: arbitrum-goerli
     source:
       abi: MetaDefenderMarketRegistry
-      address: '0xa2dac1d984F3a8ED7b5D658E7a38be7978aa278f'
+      address: '0xaAcBb83C0Cb7D918B677B1AADf4822321b8D10Cd'
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
