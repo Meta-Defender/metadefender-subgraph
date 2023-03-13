@@ -72,6 +72,7 @@ export function handleNewPolicyMinted(event: NewPolicyMinted): void {
     const entity = Policy.load(str);
     if (entity == null) {
         const newEntity = new Policy(str);
+        newEntity.epochManage = event.params.epochManage.toHexString();
         newEntity.protocol = event.params.protocol.toHexString();
         newEntity.beneficiary = event.params.beneficiary.toHexString();
         newEntity.policyId = event.params.policyId;
